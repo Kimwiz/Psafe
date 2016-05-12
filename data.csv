@@ -1,2 +1,50 @@
-PasswordRuleID,Description,KeySize,KeyType,Name,DSSKeyRuleID,EncryptionType
-0,RSA 2048-bit encrypted DSS key with auto-managed passphrase,2048,RSA,Default DSS Key Rule,0,A
+AutoManagementFlag,DSSFlag,DefaultPort,DomainNameFlag,ManageableFlag,Name,PlatformID,PortFlag,ShortName,SupportsElevationFlag
+True,False,,True,True,Windows,1,False,win,False
+True,True,22,False,True,Linux,2,True,lin,True
+True,True,22,False,True,Solaris,3,True,sol,True
+True,True,22,False,True,AIX,4,True,aix,True
+True,True,22,False,True,HP-UX,5,True,hpx,True
+True,False,1521,False,True,Oracle,8,True,ora,False
+True,False,5000,False,True,Sybase ASE,9,True,sybase,False
+True,False,3306,False,True,MySQL,10,True,mysql,False
+True,False,1433,False,True,MS SQL Server,11,True,mss,False
+True,True,22,False,True,HP iLO,24,True,hpilo,False
+True,False,464,True,True,Active Directory,25,True,ads,False
+True,True,22,False,True,RACF,30,True,racf,False
+True,True,22,False,True,Mac OSX,31,True,mac,True
+True,False,389,True,True,LDAP,32,True,ldap,False
+True,True,22,False,True,DRAC,33,True,drac,False
+True,False,,False,True,vSphere Web API,34,False,vsphere,False
+True,False,22,False,True,vSphere SSH,35,True,vspheressh,False
+True,False,23,False,True,IBMi (AS400),36,True,as400tel,False
+True,False,22,False,True,HP Comware,37,True,hpcomware,False
+True,False,22,False,True,Cisco,38,True,cisco,False
+True,False,22,False,True,BIG-IP (F5),39,True,f5bigip,False
+True,False,22,False,True,Checkpoint,40,True,checkpoint,False
+True,True,22,False,True,Juniper,41,True,juniper,False
+True,False,22,False,True,Palo Alto Networks,42,True,paloalto,False
+True,False,1025,False,True,Teradata,43,True,teradata,False
+True,False,22,False,True,Fortinet,44,True,fortinet,False
+True,False,,False,True,SAP,45,True,sap,False
+True,False,22,False,True,Windows SSH,46,True,winssh,False
+True,False,,False,True,Amazon,47,False,amazon,False
+True,False,,False,True,Office 365,48,False,off365,False
+False,False,,False,False,LinkedIn,49,False,linkedin,False
+False,False,,False,False,Twitter,50,False,twitter,False
+False,False,,False,False,Facebook,51,False,facebook,False
+False,False,,False,False,XING,52,False,xing,False
+False,False,,False,False,Pinterest,53,False,pinterest,False
+False,False,,False,False,Instagram,54,False,instagram,False
+False,False,,False,False,Google,55,False,google,False
+False,False,,False,False,Azure,56,False,azure,False
+False,False,,False,False,Rackspace,57,False,rackspace,False
+False,False,,False,False,GoGrid,58,False,gogrid,False
+True,False,,True,True,Workday,59,False,workday,False
+True,False,,False,True,Xerox,64,False,xerox,False
+False,False,,False,False,Salesforce,65,False,salesforce,False
+False,False,,False,False,Dropbox,66,False,dropbox,False
+False,False,,False,False,Box,67,False,box,False
+False,False,,True,True,Website,70,False,website,False
+True,False,,True,True,CA Service Desk,71,False,caservdesk,False
+True,False,,True,True,ServiceNow,72,False,servicenow,False
+True,False,,False,True,BMC Remedy,73,False,remedy,False

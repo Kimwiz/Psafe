@@ -187,6 +187,8 @@ class Psafe(QtGui.QMainWindow):
         data = json.dumps(dicdata)  # convert dictionary to Json
         return data
 
+
+
     #converts the info from the user to json form
     def get_impdata(self,x,bar):
         words = x.split(',')  # list of words
@@ -229,12 +231,12 @@ class Psafe(QtGui.QMainWindow):
     #displays message box for missing Url parameters
     def build_err(self):
 
-        QtGui.QMessageBox.information(self,"Missing data","Url or Server Name probably missing!")
+        QtGui.QMessageBox.critical(self,"Missing data","Url or Server Name probably missing!")
 
     #Returns an error message
     def somerror(self,mess):
         mess=str(mess)
-        QtGui.QMessageBox.information(self, "Error", mess + " " + "." + " " + " Url and a Server Name fields are probably empty!" )
+        QtGui.QMessageBox.critical(self, "Error", mess + " " + "." + " " + " Url and a Server Name fields are probably empty!" )
 
     #Informs, that authorization key will be used
     def no_key_info(self):
@@ -246,29 +248,43 @@ class Psafe(QtGui.QMainWindow):
         mess = "Key Added Successfully!"
         QtGui.QMessageBox.information(self, "Info", mess)
 
-#new method
+#convert to CSV
     def to_csv(self):
 
         try:
             dres = self.dat
-            dicx = {}
+            redone_dicx = {}
             strtyp = str(type(dres))
 
-            #sometimes the data returns as a string
+            #sometimes the data returns as a list of dictionaries
             if strtyp == "<class 'list'>":
-                my_dict = dres[0]
 
-                keys = my_dict.keys()  # store json data dict keys
+                #if list is empty
+                if not dres:
+                    QtGui.QMessageBox.critical(self, "Error",
+                                                + "," + "No excel sheet was created because no data was returned!")
+                else:
 
-                for key in keys:
-                    dicx[key] = my_dict[key]
+                    for dic in dres:
+                        for key in dic:
+                            if key not in redone_dicx:
+                                redone_dicx[key] = []
+                            redone_dicx[key].append(dic[key])
 
-                with open('data.csv', 'w+') as output_file:
-                    dict_writer = csv.DictWriter(output_file, keys)
-                    dict_writer.writeheader()
-                    dict_writer.writerow(dicx)
-                QtGui.QMessageBox.information(self, "Info",
-                                              "Excel file {} created".format(output_file))
+                    keys = sorted(redone_dicx.keys())
+
+                    with open('data.csv', 'w', newline='') as output_file:
+                        dict_writer = csv.writer(output_file, delimiter=",", quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                        dict_writer.writerow(keys)
+                        vals = zip(*[redone_dicx[key] for key in keys])
+
+                        dict_writer.writerows(vals)
+                    QtGui.QMessageBox.information(self, "Info",
+                                          "Excel file created successfully")
+
+
+
+
 
 
             else:
@@ -276,18 +292,18 @@ class Psafe(QtGui.QMainWindow):
                 keys = dres.keys()  # store json data dict keys
 
                 for key in keys:
-                    dicx[key] = dres[key]
+                    redone_dicx[key] = dres[key]
 
                 with open('data.csv', 'w+') as output_file:
                     dict_writer = csv.DictWriter(output_file, keys)
                     dict_writer.writeheader()
-                    dict_writer.writerow(dicx)
-
+                    dict_writer.writerow(redone_dicx)
                 QtGui.QMessageBox.information(self, "Info",
-                                              "Excel file {} created".format(output_file))
+                                              "Excel file successfully created")
+
         except Exception as mess:
             mess=str(mess)
-            QtGui.QMessageBox.information(self, "Info", mess+","+"No excel sheet was created because no data was returned!")
+            QtGui.QMessageBox.critical(self, "Error", mess+","+"No excel sheet was created because no data was returned!")
 
 
 
@@ -295,7 +311,7 @@ class Psafe(QtGui.QMainWindow):
 
 if __name__ == '__main__':
     app=QtGui.QApplication(sys.argv)
-    splash_pix = QtGui.QPixmap('rb.png')
+    splash_pix = QtGui.QPixmap('alienware.png')
     splash = QtGui.QSplashScreen(splash_pix,QtCore.Qt.WindowStaysOnTopHint)
     splash.setMask(splash_pix.mask())
     splash.show()

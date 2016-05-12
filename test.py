@@ -16,17 +16,20 @@ for dic in test_list:
 
 print(redone_dict)
 keys = sorted(redone_dict.keys())
-print(keys)
+
+
 # store json data dict keys
 
 
 
 try:
     with open('info.csv', 'w', newline='') as output_file:
-        dict_writer = csv.writer(output_file, delimiter="\t")
+        dict_writer = csv.writer(output_file, delimiter=",", quotechar='|',quoting=csv.QUOTE_MINIMAL)
         dict_writer.writerow(keys)
+        vals=zip(*[redone_dict[key] for key in keys])
 
-        dict_writer.writerows(zip(*[redone_dict[key] for key in keys]))
+        dict_writer.writerows(vals)
+
         #dict_writer.writerows(zip(*redone_dict.values()))
 
 except Exception as mess:
