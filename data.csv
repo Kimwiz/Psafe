@@ -1,0 +1,2 @@
+PasswordRuleID,Description,KeySize,KeyType,Name,DSSKeyRuleID,EncryptionType
+0,RSA 2048-bit encrypted DSS key with auto-managed passphrase,2048,RSA,Default DSS Key Rule,0,A
