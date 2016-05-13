@@ -77,7 +77,6 @@ class Psafe(QtGui.QMainWindow):
 
 
 
-
     #Retrieving data
     def getz(self):
 
