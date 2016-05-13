@@ -284,8 +284,6 @@ class Psafe(QtGui.QMainWindow):
 
 
 
-
-
             else:
 
                 keys = dres.keys()  # store json data dict keys
