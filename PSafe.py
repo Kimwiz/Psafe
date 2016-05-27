@@ -25,8 +25,8 @@ class Psafe(QtGui.QMainWindow):
 
 #creates url and key
     def build_header(self):
-        self.serv_name = self.ui.Serv_lnedit.text()
-        self.url = self.ui.url_linedit.text()
+        self.serv_name = self.ui.Serv_lnedit.text()#get server name
+        self.url = self.ui.url_linedit.text() #get the url
 
         if self.serv_name == "":
             self.build_err()
@@ -35,7 +35,9 @@ class Psafe(QtGui.QMainWindow):
         else:
             self.url_data = 'https://' + self.serv_name + '/eEye.RetinaCS.Server/api/public/v3/' + self.url
             self.URL = 'https://' + self.serv_name + '/eEye.RetinaCS.Server/api/public/v3/Auth/SignAppin'
-            self.auth_key = self.ui.auth_lineedit.text()
+            self.auth_key = str(self.ui.auth_lineedit.text())
+
+            print(self.auth_key)
 
             if (self.auth_key == ""):
                 self.no_key_info()
@@ -48,11 +50,13 @@ class Psafe(QtGui.QMainWindow):
     #Creating data
     def postz(self):
         try:
+            QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)  # starts loading cursor
             self.headers = {'Authorization': '{}'.format(self.auth_key)}
             url = self.url_data
             if (url == self.URL):
                 self.session.headers.update(self.headers)
                 response = self.session.post(url, verify=False)
+                QtGui.QApplication.restoreOverrideCursor()  # restore cursor
                 results = str(response) + "=> " + "\n" + str(response.text)
                 self.ui.textBrowser.setText(results)
                 self.dat = json.loads(str(response.text))
@@ -67,6 +71,7 @@ class Psafe(QtGui.QMainWindow):
                 self.session.post(self.URL, verify=False)
 
                 response = self.session.post(url, data=data, headers=self.datype)
+                QtGui.QApplication.restoreOverrideCursor()  # restore cursor
                 results = str(response) + "=> " + "\n" + str(response.text)
                 self.ui.textBrowser.setText(results)
                 self.dat = json.loads(str(response.text))
@@ -80,13 +85,16 @@ class Psafe(QtGui.QMainWindow):
     #Retrieving data
     def getz(self):
 
-        try:
 
+
+        try:
+            QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor) #starts loading cursor
             self.headers = {'Authorization': '{}'.format(self.auth_key)}
             url = self.url_data
             self.session.headers.update(self.headers)
-            self.session.post(self.URL, verify=False)
+            self.session.post(self.URL, verify=False)#Signing in
             response = self.session.get(url, verify=False)
+            QtGui.QApplication.restoreOverrideCursor() #restore cursor
             results = str(response) + "=> " + "\n" + str(response.text)
             self.ui.textBrowser.setText(results)
             self.dat = json.loads(str(response.text))
@@ -99,6 +107,7 @@ class Psafe(QtGui.QMainWindow):
       #Updating data
     def putz(self):
         try:
+            QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)  # starts loading cursor
             self.headers = {'Authorization': '{}'.format(self.auth_key)}
             url = self.url_data
             self.datype = {'Content-type': 'application/json'}
@@ -107,6 +116,7 @@ class Psafe(QtGui.QMainWindow):
             data = self.get_data(x)
             self.session.post(self.URL, verify=False)
             response = self.session.put(url, data=data, headers=self.datype)
+            QtGui.QApplication.restoreOverrideCursor()  # restore cursor
             results = str(response) + "=> " + "\n" + str(response.text)
             self.dat = json.loads(str(response.text))
 
@@ -122,11 +132,13 @@ class Psafe(QtGui.QMainWindow):
     #deleting data
     def deletz(self):
         try:
+            QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)  # starts loading cursor
             self.headers = {'Authorization': '{}'.format(self.auth_key)}
             self.session.headers.update(self.headers)
             url = self.url_data
             self.session.post(self.URL, verify=False)  # Sign in
             response = self.session.delete(url)
+            QtGui.QApplication.restoreOverrideCursor()  # restore cursor
             results = str(response) + "=> " + "\n" + str(response.text)
             self.ui.textBrowser.setText(results)
 
@@ -138,6 +150,7 @@ class Psafe(QtGui.QMainWindow):
     #importing xml file for queue
     def importz(self):
         try:
+            QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)  # starts loading cursor
             self.headers = {'Authorization': '{}'.format(self.auth_key)}
             self.session.headers.update(self.headers)
             url = self.url_data  # get the url
@@ -151,12 +164,13 @@ class Psafe(QtGui.QMainWindow):
             data = self.get_impdata(x, bar)
             self.session.post(self.URL, verify=False)
             response = self.session.post(url, data=data, headers=self.datype)
+            QtGui.QApplication.restoreOverrideCursor()  # restore cursor
             results = str(response) + "=> " + "\n" + str(response.text)
             self.ui.textBrowser.setText(results)
         except Exception as mess:
             self.somerror(mess)
 
-
+#dat for post and put actions
     def get_data(self,x):
         words = x.split(',')  # list of words
 
@@ -188,7 +202,7 @@ class Psafe(QtGui.QMainWindow):
 
 
 
-    #converts the info from the user to json form
+    #specific for imports
     def get_impdata(self,x,bar):
         words = x.split(',')  # list of words
 
@@ -235,7 +249,7 @@ class Psafe(QtGui.QMainWindow):
     #Returns an error message
     def somerror(self,mess):
         mess=str(mess)
-        QtGui.QMessageBox.critical(self, "Error", mess + " " + "." + " " + " Url and a Server Name fields are probably empty!" )
+        QtGui.QMessageBox.critical(self, "Error", mess + " " + "." + " " + "Check if the Authorization key is correct!" )
 
     #Informs, that authorization key will be used
     def no_key_info(self):
@@ -279,7 +293,7 @@ class Psafe(QtGui.QMainWindow):
 
                         dict_writer.writerows(vals)
                     QtGui.QMessageBox.information(self, "Info",
-                                          "Excel file created successfully")
+                                          "Excel file created successfully!")
 
 
 
@@ -308,7 +322,7 @@ class Psafe(QtGui.QMainWindow):
 
 if __name__ == '__main__':
     app=QtGui.QApplication(sys.argv)
-    splash_pix = QtGui.QPixmap('alienware.png')
+    splash_pix = QtGui.QPixmap('load.png')
     splash = QtGui.QSplashScreen(splash_pix,QtCore.Qt.WindowStaysOnTopHint)
     splash.setMask(splash_pix.mask())
     splash.show()

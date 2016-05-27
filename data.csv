@@ -1,5 +1,6 @@
-AccountName,Description,DisplayName,DomainName,ElevationCommand,FunctionalAccountID,Passphrase,Password,PlatformID,PrivateKey,SystemReferenceCount
-Neweinfeyn,Functional Account for Athena,Neweinfeyn,,,3,,,2,,1
-New-Admin,Functional Account for Cavendish,New-Admin,,,5,,,1,,2
-Neweinfeyn,Func Acc for Windows,Neweinfeyn,,,8,,,1,,1
-root,Fun Account for Kali,root,,,9,,,2,,1
+AutoManagementFlag,ChangeFrequencyDays,ChangeFrequencyType,ChangePasswordAfterAnyReleaseFlag,ChangeTime,CheckPasswordFlag,ContactEmail,DSSKeyRuleID,Description,ElevationCommand,FunctionalAccountID,ISAReleaseDuration,ManagedSystemID,MaxReleaseDuration,NetBiosName,PasswordRuleID,PlatformID,Port,ReleaseDuration,ResetPasswordOnMismatchFlag,SystemName,Timeout
+True,30,first,True,03:00,True,,0,,pbrun,3,120,3,10065,,3,2,,120,True,-Deleted-10.0.2.8,30
+True,30,first,True,03:00,True,,0,,,5,120,5,10065,,0,1,,120,True,-Deleted-Cavendish,30
+True,30,first,True,03:00,True,,0,,,5,120,6,10065,,0,1,,120,True,-Deleted-Cavendish,30
+True,30,first,True,03:00,True,,0,,,8,120,7,10065,,2,1,,120,True,CAVENDISH,30
+True,30,first,True,03:00,True,,0,,,9,120,8,10065,,3,2,22,120,True,010.000.002.009,30
